@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './entity/user.entity';
-import { createUserDTO } from './dto/create-user.dto';
-import { updateUserDTO } from './dto/update-user.dto';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -10,7 +10,7 @@ export class UserService {
   private users: User[] = []
   private nextId = 1
 
-  public async createUser(userDTO: createUserDTO): Promise<object> {
+  public async createUser(userDTO: CreateUserDTO): Promise<object> {
     if (this.users.some(user => user.email === userDTO.email)) {
       throw new HttpException("Email já cadastrado", HttpStatus.BAD_REQUEST)
     }
@@ -20,7 +20,7 @@ export class UserService {
     return { message: "Usuário criado com sucesso", user: newUser }
   }
 
-  public async updateUser(id: number, userDTO: updateUserDTO): Promise<object> {
+  public async updateUser(id: number, userDTO: UpdateUserDTO): Promise<object> {
     const userToUpdate = this.users.find(user => user.id == id)
 
     if (userToUpdate == undefined) {

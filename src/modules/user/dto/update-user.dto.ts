@@ -1,6 +1,7 @@
 import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
+import { Work } from 'src/modules/work/entity/work.entity';
 
-export class updateUserDTO {
+export class UpdateUserDTO {
         @IsOptional()
         @IsEmail()
         public email?: string;
@@ -16,4 +17,7 @@ export class updateUserDTO {
         @IsOptional()
         @IsNumber()
         public age?: number;
+
+        @IsOptional()
+        public work?: Work;
   }
