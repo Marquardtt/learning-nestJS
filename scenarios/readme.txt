@@ -1,0 +1,3 @@
+Usar o TalendAPI ou outro API tester que suporte os cenarios pré criados
+
+att. marquartt

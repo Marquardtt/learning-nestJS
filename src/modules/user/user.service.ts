@@ -10,7 +10,7 @@ export class UserService {
   private users: User[] = []
   private nextId = 1
 
-  createUser(userDTO: createUserDTO): object {
+  public async createUser(userDTO: createUserDTO): Promise<object> {
     if (this.users.some(user => user.email === userDTO.email)) {
       throw new HttpException("Email já cadastrado", HttpStatus.BAD_REQUEST)
     }
@@ -20,10 +20,10 @@ export class UserService {
     return { message: "Usuário criado com sucesso", user: newUser }
   }
 
-  updateUser(id: number, userDTO: updateUserDTO): object{
+  public async updateUser(id: number, userDTO: updateUserDTO): Promise<object> {
     const userToUpdate = this.users.find(user => user.id == id)
-    
-    if(userToUpdate == undefined){
+
+    if (userToUpdate == undefined) {
       throw new HttpException("Usuário não encontrado", HttpStatus.NOT_FOUND)
     }
     const updatedUser = { ...userToUpdate, ...userDTO }
@@ -31,27 +31,24 @@ export class UserService {
     return { message: "Usuário atualizado com sucesso", user: updatedUser }
   }
 
-  deleteUser(id: number): object{
+  public async deleteUser(id: number): Promise<object> {
     const userToDelete = this.users.find(user => user.id == id)
-    console.log(userToDelete)
-    if(userToDelete == undefined){
+    if (userToDelete == undefined) {
       throw new HttpException("Usuário não encontrado", HttpStatus.NOT_FOUND)
     }
-
-    this.users = this.users.slice(this.users.indexOf(userToDelete), 1)
+    this.users.splice(this.users.indexOf(userToDelete), 1)
     return { message: "Usuário deletado com sucesso", user: userToDelete }
   }
 
-  findOne(id: number): object {
+  public async findOne(id: number): Promise<object> {
     const user = this.users.find(user => user.id == id)
-    console.log(user)
     if (user == undefined) {
       throw new HttpException("Usuario não encontrado", HttpStatus.NOT_FOUND)
     }
     return { message: "Usuario encontrado", user: user }
   }
 
-  findAll(): User[] {
+  public async findAll(): Promise<User[]> {
     return this.users;
   }
 
