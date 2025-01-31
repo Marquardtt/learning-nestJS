@@ -17,7 +17,7 @@ export class UserService {
 
     const newUser = new User(this.nextId++, userDTO.email, userDTO.password, userDTO.name, userDTO.age)
     this.users.push(newUser)
-    return { message: "Usuário criado com sucesso", user: newUser }
+    return newUser
   }
 
   public async updateUser(id: number, userDTO: UpdateUserDTO): Promise<object> {
@@ -37,7 +37,7 @@ export class UserService {
       throw new HttpException("Usuário não encontrado", HttpStatus.NOT_FOUND)
     }
     this.users.splice(this.users.indexOf(userToDelete), 1)
-    return { message: "Usuário deletado com sucesso", user: userToDelete }
+    return Object(HttpStatus.OK)
   }
 
   public async findOne(id: number): Promise<object> {
@@ -45,7 +45,7 @@ export class UserService {
     if (user == undefined) {
       throw new HttpException("Usuario não encontrado", HttpStatus.NOT_FOUND)
     }
-    return { message: "Usuario encontrado", user: user }
+    return user
   }
 
   public async findAll(): Promise<User[]> {
