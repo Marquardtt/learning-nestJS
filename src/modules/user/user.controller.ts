@@ -32,4 +32,9 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @Get("/login/:email/:password")
+  public async login(@Param('email')email: string, @Param('password')password: string): Promise<User> {
+    return this.userService.login(email, password);
+  }
+
 }

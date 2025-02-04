@@ -52,4 +52,14 @@ export class UserService {
     return this.users;
   }
 
+  public async login(email:string, password:string): Promise<User> {
+    const user = this.users.find(user => user.email == email && user.password == password)
+    console.log(user);
+    
+    if (user == undefined) {
+      throw new HttpException("Credenciais inválidas", HttpStatus.UNAUTHORIZED)
+    }
+    return user
+  }
+
 }
